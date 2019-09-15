@@ -1,0 +1,22 @@
+<div class="row">
+  <% @tweets.each do |tweet| %>
+  <div class="col s8 offset-s2 ">
+    <div class="card e8eaf6 indigo lighten-5">
+      <div class="card-content black-text">
+        <span class="card-title"> <a href="/users/<%= tweet.user_id %>">
+          <span>投稿者</span><%= tweet.user.nickname %>
+        </a></span>
+          <%= simple_format(tweet.text) %>
+      </div>
+      <div class="card-action">
+        <%= link_to '詳細', "/tweets/#{tweet.id}", method: :get %>
+        <% if user_signed_in? && current_user.id == tweet.user_id %>
+        <%= link_to '編集', "/tweets/#{tweet.id}/edit", method: :get %>
+        <%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= paginate(@tweets) %>
+</div>
